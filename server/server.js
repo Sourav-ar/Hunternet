@@ -21,8 +21,15 @@ dotenv.config();
 // Initialize Express application
 const app = express();
 
-// Connect to MongoDB Database
-connectDB();
+// Middleware to ensure DB connection is active for each request
+app.use(async (req, res, next) => {
+  try {
+    await connectDB();
+    next();
+  } catch (err) {
+    next(err);
+  }
+});
 
 // Global Request Parsers & Security Middleware
 app.use(cors());
