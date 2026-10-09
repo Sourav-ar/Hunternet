@@ -53,6 +53,6 @@ app.use(errorHandler);
 
 const PORT = process.env.PORT || 5001;
 
-app.listen(PORT, '127.0.0.1', () => {
+app.listen(PORT, () => {
   console.log(`⚡ HunterNet Express Server running in ${process.env.NODE_ENV || 'development'} mode on port ${PORT}`);
 });
