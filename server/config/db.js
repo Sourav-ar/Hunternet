@@ -12,13 +12,17 @@ const connectDB = async () => {
   }
 
   try {
-    const conn = await mongoose.connect(process.env.MONGO_URI || 'mongodb://127.0.0.1:27017/mern_db', {
+    if (!process.env.MONGO_URI) {
+      throw new Error('MONGO_URI environment variable is missing in Vercel project settings!');
+    }
+    const conn = await mongoose.connect(process.env.MONGO_URI, {
       serverSelectionTimeoutMS: 5000,
     });
     isConnected = true;
     console.log(`MongoDB Connected: ${conn.connection.host}`);
   } catch (error) {
     console.error(`MongoDB Connection Error: ${error.message}`);
+    throw error;
   }
 };
 
